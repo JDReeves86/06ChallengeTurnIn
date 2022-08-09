@@ -1,0 +1,85 @@
+/* font-family: 'Nunito', sans-serif;
+font-family: 'Rubik', sans-serif; */
+:root {
+    --day: #93cdf1;
+    --cloudy: #b0cbdc;
+    --stormy: #7d9cae;
+    --night: #224a68;
+    --sun: #ffe135;
+    --moon: #deda8e;
+    --gray: #abc1d4;
+}
+
+
+*{
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.jumbotron {
+    font-family: 'Rubik', sans-serif;
+    background-color: var(--gray);
+}
+
+body {
+    margin: -1rem
+}
+
+.container {
+    margin: 0rem
+}
+
+#banner {
+    font-size: xx-large;
+    background-color: var(--gray);
+    margin:0;
+    padding: 0.5rem;
+    text-align: center;
+    
+}
+
+.current {
+    margin: 1rem;
+}
+
+.future {
+    margin: 0rem
+}
+
+.mycard {
+    border:solid black 1px;
+    border-radius: 5px;
+    margin: 1rem;
+}
+
+.day-title {
+    background-color: var(--gray);
+    border-top: solid black 1px;
+    text-align: center;
+}
+
+.day-container{
+    justify-content: center;
+}
+
+.day {
+    background-color: var(--day);
+}
+
+.night {
+    background-color: var(--night);
+    color: white;
+}
+
+#icon {
+    font-size: 4rem;
+}
+
+.sun {
+    color: var(--sun);
+}
+
+.moon {
+    color: var(--moon)
+}

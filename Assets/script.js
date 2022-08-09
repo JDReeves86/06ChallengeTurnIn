@@ -11,28 +11,28 @@ let GeoCodeApi = 'http://api.openweathermap.org/geo/1.0/direct?q='
 const apiKey = 'f077831005b0a99879525b916f58d7b5'
 
 function searchButtonHandler() {
-    buildGeoRequest()
-    cityName.value = ""
-    stateName.value = ""
-}
+    buildGeoRequest();
+    cityName.value = "";
+    stateName.value = "";
+};
 
 function convertCity(a) {
-    return newCity = a.replace(/ /gi, "+")
-}
+    return newCity = a.replace(/ /gi, "+");
+};
 
 function buildGeoRequest() {
-    convertCity(cityName.value)
-    console.log(newCity)
-    let requestGeoCode = `${GeoCodeApi + newCity},${stateName.value},${countryCode.value}&appid=${apiKey}`
-    getGeoCode(requestGeoCode)
-}
+    convertCity(cityName.value);
+    console.log(newCity);
+    let requestGeoCode = `${GeoCodeApi + newCity},${stateName.value},${countryCode.value}&appid=${apiKey}`;
+    getGeoCode(requestGeoCode);
+};
 
 function buildWeatherRequest(b) {
-    console.log(b[0].lat, b[0].lon)
-    let requestWeather = `${WeatherApi + b[0].lat}&lon=${b[0].lon}&appid=${apiKey}`
-    console.log(requestWeather)
-    getWeather(requestWeather)
-}
+    console.log(b[0].lat, b[0].lon);
+    let requestWeather = `${WeatherApi + b[0].lat}&lon=${b[0].lon}&appid=${apiKey}`;
+    console.log(requestWeather);
+    getWeather(requestWeather);
+};
 
 function getGeoCode(request) {
     fetch(request)
@@ -40,9 +40,9 @@ function getGeoCode(request) {
             return response.json();
         })
         .then(function(data) {
-            buildWeatherRequest(data)
-            }) 
-}
+            buildWeatherRequest(data);
+            });
+};
 
 function getWeather(request) {
     fetch(request)
@@ -51,15 +51,19 @@ function getWeather(request) {
         })
         .then(function(data) {
             console.log(data)
-        })
-}
+            buildResults(data)
+        });
+};
 
-function buildResults() {
-    let divRow = document.createElement('<div>');
+function buildResults(c) {
+    let divRow = document.createElement('div');
+    divRow.setAttribute('class', 'row');
     weatherContainer.appendChild(divRow);
 
-    let divColumn = document.createElement('<div>');
-    weatherContainer.appendChild(divColumn);
+    let currentDivColumn = document.createElement('div');
+    currentDivColumn.setAttribute('class', 'col-md');
+    currentDivColumn.textContent = c.current.weather[0]
+    weatherContainer.appendChild(currentDivColumn);
 }
 
 
