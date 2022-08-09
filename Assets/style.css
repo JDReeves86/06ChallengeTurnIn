@@ -30,7 +30,7 @@ body {
     margin: 0rem
 }
 
-#banner {
+.banner {
     font-size: xx-large;
     background-color: var(--gray);
     margin:0;
