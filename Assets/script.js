@@ -13,21 +13,21 @@ let GeoCodeApi = 'http://api.openweathermap.org/geo/1.0/direct?q='
 const apiKey = 'f077831005b0a99879525b916f58d7b5'
 
 let recentSearchArr = [];
-let searchObj = {};
 
 init();
 
 function searchButtonHandler() {
-    buildGeoRequest();
-    searchObj.city = cityName.value;
+    buildGeoRequest(cityName.value);
+    saveSearches();
+    buildRecents();
 };
 
 function convertCity(a) {
     return newCity = a.replace(/ /gi, "+");
 };
 
-function buildGeoRequest() {
-    convertCity(cityName.value);
+function buildGeoRequest(g) {
+    convertCity(g);
     console.log(newCity);
     let requestGeoCode = `${GeoCodeApi + newCity},${stateName.value},${countryCode.value}&appid=${apiKey}`;
     getGeoCode(requestGeoCode);
@@ -37,8 +37,6 @@ function buildWeatherRequest(b) {
     console.log(b[0].lat, b[0].lon);
     let requestWeather = `${WeatherApi + b[0].lat}&lon=${b[0].lon}&appid=${apiKey}&units=imperial`;
     console.log(requestWeather);
-    searchObj.weatherReq = requestWeather;
-    console.log(searchObj);
     getWeather(requestWeather, cityName.value);
 };
 
@@ -61,7 +59,6 @@ function getWeather(request, g) {
             console.log(data)
             buildResults(data, g)
         });
-    saveSearches();
 };
 
 function capitalizeFirstLetter(e) {
@@ -112,8 +109,10 @@ function buildResults(c, d) {
 };
 
 function saveSearches() {
-    recentSearchArr.push(searchObj);
-    searchObj = {};
+    recentSearchArr.push(cityName.value);
+    while (recentSearchArr.length > 5) {
+        recentSearchArr.shift()
+    }
     localStorage.setItem('searches', JSON.stringify(recentSearchArr));
 };
 
@@ -126,12 +125,12 @@ function init() {
 }
 
 function buildRecents() {
+    recentSearchDiv.innerHTML = ""
     for (let i = 0; i < 5; i++) {
         let myBtn = document.createElement('button');
         myBtn.setAttribute('class', 'myBtn');
-        myBtn.setAttribute('data-request', recentSearchArr[i].weatherReq)
-        myBtn.setAttribute('data-city', recentSearchArr[i].city)
-        myBtn.textContent = recentSearchArr[i].city;
+        myBtn.setAttribute('data-city', recentSearchArr[i])
+        myBtn.textContent = capitalizeFirstLetter(recentSearchArr[i]);
         myBtn.addEventListener('click', recentSearchHandler)
         recentSearchDiv.appendChild(myBtn);
     }
@@ -139,9 +138,9 @@ function buildRecents() {
 
 function recentSearchHandler(f) {
     let clicked = f.target;
-    let priorRequest = clicked.getAttribute('data-request');
-    forecast.innerHTML = ""
-    getWeather(priorRequest, capitalizeFirstLetter(clicked.getAttribute('data-city')));
+    let priorCity = clicked.getAttribute('data-city');
+    forecast.innerHTML = "";
+    buildGeoRequest(priorCity);
 
 }
 
