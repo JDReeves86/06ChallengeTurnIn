@@ -20,6 +20,7 @@ function searchButtonHandler() {
     let cityStr = trimInput(cityName.value)
     if (cityStr.length == 0) {
         alert('Please input a valid city')
+        return
     }
     buildGeoRequest(cityStr);
     saveSearches(cityStr);
@@ -71,7 +72,6 @@ function trimInput (str) {
 }
 
 function buildResults(c, d) {
-    let cityDisplay = d
     cityName.value = "";
     stateName.value = "";
     let cityCard = document.getElementById('cityCard');
@@ -82,18 +82,18 @@ function buildResults(c, d) {
     let humid = document.getElementById('humid');
     let icon = document.getElementById('icon');
 
-    cityCard.textContent = `${cityDisplay}`
+    cityCard.textContent = `${d}`
     icon.setAttribute('src', `http://openweathermap.org/img/wn/${c.current.weather[0].icon}.png`)
     weather.textContent = `${c.current.weather[0].description}`
     temp.textContent = `Temp: ${c.current.temp}°F`
     wind.textContent = `Windspeed: ${c.current.wind_speed}mph`
     uvindex.textContent = `UVIndex: ${c.current.uvi}`
     humid.textContent = `Humidity: ${c.current.humidity}%`
+    setUVColors(uvindex, c.current.uvi)
 
     forecast.innerHTML = "";
-    
+
     for (let i=0; i<5; i++) {
-        // let forecast = document.getElementById('forecast-cont');
         let node = document.createElement('div');
         node.setAttribute('class', 'col-2 mycard day')
         node.innerHTML = `
@@ -104,17 +104,47 @@ function buildResults(c, d) {
                 <p>${c.daily[i].weather[0].description}</p>
                 <p>Temp: ${c.daily[i].temp.day}°F</p>
                 <p>Windspeed: ${c.daily[i].wind_gust}mph</p>
-                <p>UVIndex: ${c.daily[i].uvi}</p>
+                <p class='UVIcreated' >UVIndex: ${c.daily[i].uvi}</p>
                 <p>Humidity: ${c.daily[i].humidity}%</p>
             </div>`
-
-        // node.appendChild(textNode)
         forecast.appendChild(node)
-
+    }
+    let UVIArr = document.querySelectorAll('.UVIcreated')
+    console.log(UVIArr)
+    for (let i = 0; i < UVIArr.length; i++) {
+        setUVColors(UVIArr[i], c.daily[i].uvi)
     }
 
-
 };
+
+function setUVColors(target, l) {
+    // let UVcolor = document.querySelectorAll('#UV');
+        switch (true) {
+            case (l < 3):
+                console.log('UVI low');
+                target.setAttribute('style', 'background-color:green')
+                break;
+            case (l >= 3 && l < 6):
+                console.log('UVI mod');
+                target.setAttribute('style', 'background-color:yellow')
+                break;
+            case (l >= 6 && l < 8):
+                console.log('UVI hi');
+                target.setAttribute('style', 'background-color:orange')
+                break;
+            case (l >= 8 && l <= 11):
+                console.log('UVI way hi');
+                target.setAttribute('style', 'background-color:red')
+                break;
+            case (l > 11):
+                console.log('UVI hi AF');
+                target.setAttribute('style', 'background-color:purple')
+                break;
+            default:
+                console.log('I am confuse')
+        }
+    
+    }
 
 function saveSearches(k) {
     if (recentSearchArr.includes(k)) {
@@ -155,8 +185,3 @@ function recentSearchHandler(f) {
 }
 
 searchBtn.addEventListener('click', searchButtonHandler)
-
-
-
-
-
