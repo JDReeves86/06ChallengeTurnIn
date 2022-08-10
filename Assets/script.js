@@ -10,9 +10,13 @@ let GeoCodeApi = 'http://api.openweathermap.org/geo/1.0/direct?q='
 //{city name},{state code},{country code}&limit={limit}&appid={API key}
 const apiKey = 'f077831005b0a99879525b916f58d7b5'
 
+let recentSearchArr = [];
+let searchObj = {};
+
+
 function searchButtonHandler() {
     buildGeoRequest();
-
+    searchObj.city = cityName.value;
 };
 
 function convertCity(a) {
@@ -30,6 +34,8 @@ function buildWeatherRequest(b) {
     console.log(b[0].lat, b[0].lon);
     let requestWeather = `${WeatherApi + b[0].lat}&lon=${b[0].lon}&appid=${apiKey}&units=imperial`;
     console.log(requestWeather);
+    searchObj.weatherReq = requestWeather;
+    console.log(searchObj);
     getWeather(requestWeather);
 };
 
@@ -52,9 +58,15 @@ function getWeather(request) {
             console.log(data)
             buildResults(data, cityName.value)
         });
+    
 };
 
+function capitalizeFirstLetter(e) {
+    return e.charAt(0).toUpperCase() + e.slice(1);
+}
+
 function buildResults(c, d) {
+    let cityDisplay = capitalizeFirstLetter(d)
     cityName.value = "";
     stateName.value = "";
     let cityCard = document.getElementById('cityCard');
@@ -64,10 +76,10 @@ function buildResults(c, d) {
     let uvindex = document.getElementById('UV');
     let humid = document.getElementById('humid');
 
-    cityCard.textContent = `${d}`
+    cityCard.textContent = `${cityDisplay}`
     weather.textContent = `${c.current.weather[0].description}`
     temp.textContent = `Temp: ${c.current.temp}°F`
-    wind.textContent = `Windespeed: ${c.current.wind_speed}mph`
+    wind.textContent = `Windspeed: ${c.current.wind_speed}mph`
     uvindex.textContent = `UVIndex: ${c.current.uvi}`
     humid.textContent = `Humidity: ${c.current.humidity}%`
 
@@ -96,7 +108,12 @@ function buildResults(c, d) {
 
 }
 
+function saveSearches() {
+    recentSearchArr.push(searchObj);
+    searchObj = {};
+    localStorage.setItem('searches', JSON.stringify(recentSearchArr));
+}
+
+
 
 searchBtn.addEventListener('click', searchButtonHandler)
-
-// getGeoCode()
