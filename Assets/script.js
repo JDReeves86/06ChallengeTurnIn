@@ -109,8 +109,8 @@ function buildResults(c, d) {
             </div>`
         forecast.appendChild(node)
     }
+
     let UVIArr = document.querySelectorAll('.UVIcreated')
-    console.log(UVIArr)
     for (let i = 0; i < UVIArr.length; i++) {
         setUVColors(UVIArr[i], c.daily[i].uvi)
     }
@@ -118,33 +118,32 @@ function buildResults(c, d) {
 };
 
 function setUVColors(target, l) {
-    // let UVcolor = document.querySelectorAll('#UV');
-        switch (true) {
-            case (l < 3):
-                console.log('UVI low');
-                target.setAttribute('style', 'background-color:green')
-                break;
-            case (l >= 3 && l < 6):
-                console.log('UVI mod');
-                target.setAttribute('style', 'background-color:yellow')
-                break;
-            case (l >= 6 && l < 8):
-                console.log('UVI hi');
-                target.setAttribute('style', 'background-color:orange')
-                break;
-            case (l >= 8 && l <= 11):
-                console.log('UVI way hi');
-                target.setAttribute('style', 'background-color:red')
-                break;
-            case (l > 11):
-                console.log('UVI hi AF');
-                target.setAttribute('style', 'background-color:purple')
-                break;
-            default:
-                console.log('I am confuse')
-        }
-    
+    switch (true) {
+        case (l < 3):
+            console.log('UVI low');
+            target.setAttribute('style', 'background-color:green')
+            break;
+        case (l >= 3 && l < 6):
+            console.log('UVI mod');
+            target.setAttribute('style', 'background-color:yellow')
+            break;
+        case (l >= 6 && l < 8):
+            console.log('UVI hi');
+            target.setAttribute('style', 'background-color:orange')
+            break;
+        case (l >= 8 && l <= 11):
+            console.log('UVI way hi');
+            target.setAttribute('style', 'background-color:red')
+            break;
+        case (l > 11):
+            console.log('UVI hi AF');
+            target.setAttribute('style', 'background-color:purple')
+            break;
+        default:
+            console.log('I am confuse')
     }
+
+}
 
 function saveSearches(k) {
     if (recentSearchArr.includes(k)) {
