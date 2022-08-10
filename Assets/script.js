@@ -80,21 +80,25 @@ function buildResults(c, d) {
     let wind = document.getElementById('wind');
     let uvindex = document.getElementById('UV');
     let humid = document.getElementById('humid');
+    let icon = document.getElementById('icon');
 
     cityCard.textContent = `${cityDisplay}`
+    icon.setAttribute('src', `http://openweathermap.org/img/wn/${c.current.weather[0].icon}.png`)
     weather.textContent = `${c.current.weather[0].description}`
     temp.textContent = `Temp: ${c.current.temp}°F`
     wind.textContent = `Windspeed: ${c.current.wind_speed}mph`
     uvindex.textContent = `UVIndex: ${c.current.uvi}`
     humid.textContent = `Humidity: ${c.current.humidity}%`
 
+    forecast.innerHTML = "";
+    
     for (let i=0; i<5; i++) {
         // let forecast = document.getElementById('forecast-cont');
         let node = document.createElement('div');
         node.setAttribute('class', 'col-2 mycard day')
         node.innerHTML = `
             <div class="p-3">
-                <i class="fa-solid fa-sun sun" id="icon"></i>
+                <img src="http://openweathermap.org/img/wn/${c.daily[i].weather[0].icon}.png"id="icon">
             </div>
             <div class="col-md">
                 <p>${c.daily[i].weather[0].description}</p>
@@ -103,7 +107,6 @@ function buildResults(c, d) {
                 <p>UVIndex: ${c.daily[i].uvi}</p>
                 <p>Humidity: ${c.daily[i].humidity}%</p>
             </div>`
-
 
         // node.appendChild(textNode)
         forecast.appendChild(node)
@@ -114,6 +117,9 @@ function buildResults(c, d) {
 };
 
 function saveSearches(k) {
+    if (recentSearchArr.includes(k)) {
+        return
+    }
     recentSearchArr.push(k);
     while (recentSearchArr.length > 5) {
         recentSearchArr.shift()
@@ -146,9 +152,7 @@ function recentSearchHandler(f) {
     let priorCity = trimInput(clicked.getAttribute('data-city'));
     forecast.innerHTML = "";
     buildGeoRequest(priorCity);
-
 }
-
 
 searchBtn.addEventListener('click', searchButtonHandler)
 
