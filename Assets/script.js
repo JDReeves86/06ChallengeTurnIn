@@ -121,23 +121,23 @@ function setUVColors(target, l) {
     switch (true) {
         case (l < 3):
             console.log('UVI low');
-            target.setAttribute('style', 'background-color:green')
+            target.setAttribute('style', 'background-color: var(--UVlo); color: white')
             break;
         case (l >= 3 && l < 6):
             console.log('UVI mod');
-            target.setAttribute('style', 'background-color:yellow')
+            target.setAttribute('style', 'background-color: var(--UVmod)')
             break;
         case (l >= 6 && l < 8):
             console.log('UVI hi');
-            target.setAttribute('style', 'background-color:orange')
+            target.setAttribute('style', 'background-color: var(--UVhi)')
             break;
         case (l >= 8 && l <= 11):
             console.log('UVI way hi');
-            target.setAttribute('style', 'background-color:red')
+            target.setAttribute('style', 'background-color: var(--UVwayhi); color: white')
             break;
         case (l > 11):
             console.log('UVI hi AF');
-            target.setAttribute('style', 'background-color:purple')
+            target.setAttribute('style', 'background-color: var(--UVhiAF); color: white')
             break;
         default:
             console.log('I am confuse')
