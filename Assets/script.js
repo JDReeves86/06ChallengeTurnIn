@@ -18,16 +18,16 @@ let searchObj = {};
 init();
 
 function searchButtonHandler() {
-    buildGeoRequest();
-    searchObj.city = cityName.value;
+    buildGeoRequest(cityName.value);
+    recentSearchArr.push(cityName.value)
 };
 
 function convertCity(a) {
     return newCity = a.replace(/ /gi, "+");
 };
 
-function buildGeoRequest() {
-    convertCity(cityName.value);
+function buildGeoRequest(z) {
+    convertCity(z);
     console.log(newCity);
     let requestGeoCode = `${GeoCodeApi + newCity},${stateName.value},${countryCode.value}&appid=${apiKey}`;
     getGeoCode(requestGeoCode);
@@ -37,8 +37,6 @@ function buildWeatherRequest(b) {
     console.log(b[0].lat, b[0].lon);
     let requestWeather = `${WeatherApi + b[0].lat}&lon=${b[0].lon}&appid=${apiKey}&units=imperial`;
     console.log(requestWeather);
-    searchObj.weatherReq = requestWeather;
-    console.log(searchObj);
     getWeather(requestWeather, cityName.value);
 };
 
@@ -52,14 +50,14 @@ function getGeoCode(request) {
             });
 };
 
-function getWeather(request, g) {
+function getWeather(request) {
     fetch(request)
         .then(function(response) {
             return response.json()
         })
         .then(function(data) {
             console.log(data)
-            buildResults(data, g)
+            buildResults(data, cityName.value)
         });
     saveSearches();
 };
@@ -77,6 +75,7 @@ function buildResults(c, d) {
     let temp = document.getElementById('temp');
     let wind = document.getElementById('wind');
     let uvindex = document.getElementById('UV');
+
     let humid = document.getElementById('humid');
 
     cityCard.textContent = `${cityDisplay}`
@@ -102,18 +101,18 @@ function buildResults(c, d) {
                 <p>Humidity: ${c.daily[i].humidity}%</p>
             </div>`
 
-
         // node.appendChild(textNode)
         forecast.appendChild(node)
-
+        buildRecents()
     }
 
 
 };
 
 function saveSearches() {
-    recentSearchArr.push(searchObj);
-    searchObj = {};
+    while (recentSearchArr.length > 5) {
+        recentSearchArr.shift()
+    }
     localStorage.setItem('searches', JSON.stringify(recentSearchArr));
 };
 
@@ -121,17 +120,18 @@ function init() {
     let storedSearches = JSON.parse(localStorage.getItem('searches'));
     if (storedSearches !== null) {
         recentSearchArr = storedSearches
+        buildRecents()
     }
-    buildRecents()
 }
 
 function buildRecents() {
-    for (let i = 0; i < 5; i++) {
+    recentSearchDiv.textContent = ""
+    for (let i = 0; i < recentSearchArr.length; i++) {
         let myBtn = document.createElement('button');
         myBtn.setAttribute('class', 'myBtn');
-        myBtn.setAttribute('data-request', recentSearchArr[i].weatherReq)
-        myBtn.setAttribute('data-city', recentSearchArr[i].city)
-        myBtn.textContent = recentSearchArr[i].city;
+        myBtn.setAttribute('data-city', recentSearchArr[i])
+        myBtn.textContent = capitalizeFirstLetter(recentSearchArr[i]);
+        // myBtn.textContent = capitalizeFirstLetter(recentSearchArr[i].city);
         myBtn.addEventListener('click', recentSearchHandler)
         recentSearchDiv.appendChild(myBtn);
     }
@@ -139,12 +139,12 @@ function buildRecents() {
 
 function recentSearchHandler(f) {
     let clicked = f.target;
-    let priorRequest = clicked.getAttribute('data-request');
+    let priorCity = clicked.getAttribute('data-city');
     forecast.innerHTML = ""
-    getWeather(priorRequest, capitalizeFirstLetter(clicked.getAttribute('data-city')));
-
+    saveSearches()
+    cityName.value = priorCity
+    buildGeoRequest(priorCity)
 }
-
 
 searchBtn.addEventListener('click', searchButtonHandler)
 
