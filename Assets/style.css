@@ -43,6 +43,10 @@ body {
     margin: 1rem;
 }
 
+#cityCard {
+    text-align: center;
+}
+
 .mycard {
     border:solid black 1px;
     border-radius: 5px;

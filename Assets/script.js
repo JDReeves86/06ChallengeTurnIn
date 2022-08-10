@@ -12,8 +12,7 @@ const apiKey = 'f077831005b0a99879525b916f58d7b5'
 
 function searchButtonHandler() {
     buildGeoRequest();
-    cityName.value = "";
-    stateName.value = "";
+
 };
 
 function convertCity(a) {
@@ -51,19 +50,26 @@ function getWeather(request) {
         })
         .then(function(data) {
             console.log(data)
-            buildResults(data)
+            buildResults(data, cityName.value)
         });
 };
 
-function buildResults(c) {
-    // let divRow = document.createElement('div');
-    // divRow.setAttribute('class', 'row day-container');
-    // weatherContainer.appendChild(divRow);
+function buildResults(c, d) {
+    cityName.value = "";
+    stateName.value = "";
+    let cityCard = document.getElementById('cityCard');
+    let weather = document.getElementById('weather');
+    let temp = document.getElementById('temp');
+    let wind = document.getElementById('wind');
+    let uvindex = document.getElementById('UV');
+    let humid = document.getElementById('humid');
 
-    // let currentDivColumn = document.createElement('div');
-    // currentDivColumn.setAttribute('class', 'col-md');
-    // currentDivColumn.textContent = c.current.weather[0]
-    // weatherContainer.appendChild(currentDivColumn);
+    cityCard.textContent = `${d}`
+    weather.textContent = `${c.current.weather[0].description}`
+    temp.textContent = `Temp: ${c.current.temp}°F`
+    wind.textContent = `Windespeed: ${c.current.wind_speed}mph`
+    uvindex.textContent = `UVIndex: ${c.current.uvi}`
+    humid.textContent = `Humidity: ${c.current.humidity}%`
 
     for (let i=0; i<5; i++) {
         let forecast = document.getElementById('forecast-cont');
@@ -74,11 +80,11 @@ function buildResults(c) {
                 <i class="fa-solid fa-sun sun" id="icon"></i>
             </div>
             <div class="col-md">
-                <p>Sunny</p>
-                <p>Hi: 76°</p>
-                <p>Windspeed: 4mph</p>
-                <p>UVI: 1</p>
-                <p>Humidity: 10%</p>
+                <p>${c.daily[i].weather[0].description}</p>
+                <p>Temp: ${c.daily[i].temp.day}°F</p>
+                <p>Windspeed: ${c.daily[i].wind_gust}mph</p>
+                <p>UVIndex: ${c.daily[i].uvi}</p>
+                <p>Humidity: ${c.daily[i].humidity}%</p>
             </div>`
 
 
