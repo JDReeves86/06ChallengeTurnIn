@@ -4,6 +4,7 @@ const stateName = document.getElementById('state');
 const countryCode = document.getElementById('country');
 const searchBtn = document.getElementById('searchBtn');
 const recentSearchDiv = document.getElementById('recentSearches');
+let forecast = document.getElementById('forecast-cont');
 
 let WeatherApi = 'https://api.openweathermap.org/data/2.5/onecall?lat='
 //{lat}&lon={lon}&exclude={part}&appid={API key}
@@ -14,6 +15,7 @@ const apiKey = 'f077831005b0a99879525b916f58d7b5'
 let recentSearchArr = [];
 let searchObj = {};
 
+init();
 
 function searchButtonHandler() {
     buildGeoRequest();
@@ -37,7 +39,7 @@ function buildWeatherRequest(b) {
     console.log(requestWeather);
     searchObj.weatherReq = requestWeather;
     console.log(searchObj);
-    getWeather(requestWeather);
+    getWeather(requestWeather, cityName.value);
 };
 
 function getGeoCode(request) {
@@ -50,14 +52,14 @@ function getGeoCode(request) {
             });
 };
 
-function getWeather(request) {
+function getWeather(request, g) {
     fetch(request)
         .then(function(response) {
             return response.json()
         })
         .then(function(data) {
             console.log(data)
-            buildResults(data, cityName.value)
+            buildResults(data, g)
         });
     saveSearches();
 };
@@ -85,7 +87,7 @@ function buildResults(c, d) {
     humid.textContent = `Humidity: ${c.current.humidity}%`
 
     for (let i=0; i<5; i++) {
-        let forecast = document.getElementById('forecast-cont');
+        // let forecast = document.getElementById('forecast-cont');
         let node = document.createElement('div');
         node.setAttribute('class', 'col-2 mycard day')
         node.innerHTML = `
@@ -128,6 +130,7 @@ function buildRecents() {
         let myBtn = document.createElement('button');
         myBtn.setAttribute('class', 'myBtn');
         myBtn.setAttribute('data-request', recentSearchArr[i].weatherReq)
+        myBtn.setAttribute('data-city', recentSearchArr[i].city)
         myBtn.textContent = recentSearchArr[i].city;
         recentSearchDiv.appendChild(myBtn);
     }
@@ -135,9 +138,20 @@ function buildRecents() {
 
 function recentSearchHandler(f) {
     let clicked = f.target;
-    
+    let priorRequest = clicked.getAttribute('data-request');
+    forecast.innerHTML = ""
+    getWeather(priorRequest, capitalizeFirstLetter(clicked.getAttribute('data-city')));
+
 }
+
 
 searchBtn.addEventListener('click', searchButtonHandler)
 
-init();
+let recentSearchBtn = document.querySelectorAll('.myBtn');
+for (let i = 0; i < recentSearchBtn.length; i++) {
+    recentSearchBtn[i].addEventListener('click', recentSearchHandler)
+}
+
+
+
+
