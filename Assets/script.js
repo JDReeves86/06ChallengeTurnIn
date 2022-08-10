@@ -2,7 +2,8 @@ const weatherContainer = document.getElementById('container')
 const cityName = document.getElementById('city');
 const stateName = document.getElementById('state');
 const countryCode = document.getElementById('country');
-const searchBtn = document.getElementById('searchBtn')
+const searchBtn = document.getElementById('searchBtn');
+const recentSearchDiv = document.getElementById('recentSearches');
 
 let WeatherApi = 'https://api.openweathermap.org/data/2.5/onecall?lat='
 //{lat}&lon={lon}&exclude={part}&appid={API key}
@@ -58,12 +59,12 @@ function getWeather(request) {
             console.log(data)
             buildResults(data, cityName.value)
         });
-    
+    saveSearches();
 };
 
 function capitalizeFirstLetter(e) {
     return e.charAt(0).toUpperCase() + e.slice(1);
-}
+};
 
 function buildResults(c, d) {
     let cityDisplay = capitalizeFirstLetter(d)
@@ -106,14 +107,37 @@ function buildResults(c, d) {
     }
 
 
-}
+};
 
 function saveSearches() {
     recentSearchArr.push(searchObj);
     searchObj = {};
     localStorage.setItem('searches', JSON.stringify(recentSearchArr));
+};
+
+function init() {
+    let storedSearches = JSON.parse(localStorage.getItem('searches'));
+    if (storedSearches !== null) {
+        recentSearchArr = storedSearches
+    }
+    buildRecents()
 }
 
+function buildRecents() {
+    for (let i = 0; i < 5; i++) {
+        let myBtn = document.createElement('button');
+        myBtn.setAttribute('class', 'myBtn');
+        myBtn.setAttribute('data-request', recentSearchArr[i].weatherReq)
+        myBtn.textContent = recentSearchArr[i].city;
+        recentSearchDiv.appendChild(myBtn);
+    }
+}
 
+function recentSearchHandler(f) {
+    let clicked = f.target;
+    
+}
 
 searchBtn.addEventListener('click', searchButtonHandler)
+
+init();

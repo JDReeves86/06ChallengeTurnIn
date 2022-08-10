@@ -20,6 +20,7 @@ font-family: 'Rubik', sans-serif; */
 .jumbotron {
     font-family: 'Rubik', sans-serif;
     background-color: var(--gray);
+    border-bottom: solid black 1px;
 }
 
 body {
@@ -30,13 +31,34 @@ body {
     margin: 0rem
 }
 
+.container h5 {
+    text-align: center;
+    margin-top: -2rem;
+    padding: 1rem;
+    border-bottom: solid black 2px;
+    background-color: var(--stormy);
+    font-weight: bold;
+}
+
+#recentSearches {
+    justify-content: center;
+}
+
+.myBtn {
+    padding: 0.5rem 1rem;
+    margin: 1rem 2rem;
+    border-radius: 5px;
+    border: solid black 1px;
+    background-color: var(--gray);
+}
+
 .banner {
     font-size: xx-large;
     background-color: var(--gray);
     margin:0;
     padding: 0.5rem;
     text-align: center;
-    
+    border-top: solid black 1px;
 }
 
 .current {
