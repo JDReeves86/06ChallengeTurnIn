@@ -35,6 +35,7 @@
             <div class="col-12 banner" id="banner">Todays Forecast</div>
 
             <div class="col-6 col-sm-4 row current mycard day" id="current">
+                <p>City Name</p>
                 <div class="col-md text-center text-md-right p-3">
                     <i class="fa-solid fa-sun sun" id="icon"></i>
                 </div>
@@ -48,41 +49,81 @@
             </div>
         </div>
 
-        <div class="col-12 banner" id="banner">6-Day Forecast</div>
-
-        <div class="row justify-content-center">
-            <div class="col-12 future row" id="future">
-
-                <h5 class="col-12 day-title">Day 1</h5>
-
-                <div class="row col-12 day-container">
-                    <div class="col-12 col-sm-3 mycard day">
-                        <div class="p-3">
-                            <i class="fa-solid fa-sun sun" id="icon"></i>
-                        </div>
-                        <div class="col-md">
-                            <p>Sunny</p>
-                            <p>Hi: 76°</p>
-                            <p>Windspeed: 4mph</p>
-                            <p>UVI: 1</p>
-                            <p>Humidity: 10%</p>
-                        </div>
+        <div class="col-12 banner" id="banner">5-Day Forecast</div>
+            <div class="row day-container" id="forecast-cont">
+                
+            <!-- <div class="col-2 mycard day">
+                    <div class="p-3">
+                        <i class="fa-solid fa-sun sun" id="icon"></i>
                     </div>
-                    <div class="col-12 col-sm-3 mycard night">
-                        <div class="p-3">
-                            <i class="fa-solid fa-moon moon" id="icon"></i>
-                        </div>
-                        <div class="col-md">
-                            <p>Sunny</p>
-                            <p>Lo: 76°</p>
-                            <p>Windspeed: 4mph</p>
-                            <p>UVI: 1</p>
-                            <p>Humidity: 10%</p>
-                        </div>
+                    <div class="col-md">
+                        <p>Sunny</p>
+                        <p>Hi: 76°</p>
+                        <p>Windspeed: 4mph</p>
+                        <p>UVI: 1</p>
+                        <p>Humidity: 10%</p>
                     </div>
                 </div>
+                <div class="col-2 mycard day">
+                    <div class="p-3">
+                        <i class="fa-solid fa-sun sun" id="icon"></i>
+                    </div>
+                    <div class="col-md">
+                        <p>Sunny</p>
+                        <p>Hi: 76°</p>
+                        <p>Windspeed: 4mph</p>
+                        <p>UVI: 1</p>
+                        <p>Humidity: 10%</p>
+                    </div>
+                </div>
+                <div class="col-2 mycard day">
+                    <div class="p-3">
+                        <i class="fa-solid fa-sun sun" id="icon"></i>
+                    </div>
+                    <div class="col-md">
+                        <p>Sunny</p>
+                        <p>Hi: 76°</p>
+                        <p>Windspeed: 4mph</p>
+                        <p>UVI: 1</p>
+                        <p>Humidity: 10%</p>
+                    </div>
+                </div>
+                <div class="col-2 mycard day">
+                    <div class="p-3">
+                        <i class="fa-solid fa-sun sun" id="icon"></i>
+                    </div>
+                    <div class="col-md">
+                        <p>Sunny</p>
+                        <p>Hi: 76°</p>
+                        <p>Windspeed: 4mph</p>
+                        <p>UVI: 1</p>
+                        <p>Humidity: 10%</p>
+                    </div>
+                </div>
+                <div class="col-2 mycard day">
+                    <div class="p-3">
+                        <i class="fa-solid fa-sun sun" id="icon"></i>
+                    </div>
+                    <div class="col-md">
+                        <p>Sunny</p>
+                        <p>Hi: 76°</p>
+                        <p>Windspeed: 4mph</p>
+                        <p>UVI: 1</p>
+                        <p>Humidity: 10%</p>
+                    </div>
+                </div> -->               
+            
+            </div>  
 
-                <h5 class="col-12 day-title">Day 2</h5>
+    </div>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script src="./Assets/script.js" rel="text/javascript"></script>
+</body>
+</html>
+
+<!-- <h5 class="col-12 day-title">Day 2</h5>
 
                 <div class="row col-12 day-container">
                     <div class="col-12 col-sm-3 mycard day">
@@ -196,15 +237,4 @@
                             <p>Humidity: 10%</p>
                         </div>
                     </div>
-                </div>
-            </div>  
-        </div>
-    </div>
-
-
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-    <script src="./Assets/script.js" rel="text/javascript"></script>
-</body>
-</html>
+                </div> -->

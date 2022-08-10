@@ -29,7 +29,7 @@ function buildGeoRequest() {
 
 function buildWeatherRequest(b) {
     console.log(b[0].lat, b[0].lon);
-    let requestWeather = `${WeatherApi + b[0].lat}&lon=${b[0].lon}&appid=${apiKey}`;
+    let requestWeather = `${WeatherApi + b[0].lat}&lon=${b[0].lon}&appid=${apiKey}&units=imperial`;
     console.log(requestWeather);
     getWeather(requestWeather);
 };
@@ -56,14 +56,38 @@ function getWeather(request) {
 };
 
 function buildResults(c) {
-    let divRow = document.createElement('div');
-    divRow.setAttribute('class', 'row');
-    weatherContainer.appendChild(divRow);
+    // let divRow = document.createElement('div');
+    // divRow.setAttribute('class', 'row day-container');
+    // weatherContainer.appendChild(divRow);
 
-    let currentDivColumn = document.createElement('div');
-    currentDivColumn.setAttribute('class', 'col-md');
-    currentDivColumn.textContent = c.current.weather[0]
-    weatherContainer.appendChild(currentDivColumn);
+    // let currentDivColumn = document.createElement('div');
+    // currentDivColumn.setAttribute('class', 'col-md');
+    // currentDivColumn.textContent = c.current.weather[0]
+    // weatherContainer.appendChild(currentDivColumn);
+
+    for (let i=0; i<5; i++) {
+        let forecast = document.getElementById('forecast-cont');
+        let node = document.createElement('div');
+        node.setAttribute('class', 'col-2 mycard day')
+        node.innerHTML = `
+            <div class="p-3">
+                <i class="fa-solid fa-sun sun" id="icon"></i>
+            </div>
+            <div class="col-md">
+                <p>Sunny</p>
+                <p>Hi: 76°</p>
+                <p>Windspeed: 4mph</p>
+                <p>UVI: 1</p>
+                <p>Humidity: 10%</p>
+            </div>`
+
+
+        // node.appendChild(textNode)
+        forecast.appendChild(node)
+
+    }
+
+
 }
 
 
