@@ -23,8 +23,6 @@ function searchButtonHandler() {
         return
     }
     buildGeoRequest(cityStr);
-    saveSearches(cityStr);
-    buildRecents();
 };
 
 function convertCity(a) {
@@ -39,6 +37,12 @@ function buildGeoRequest(g) {
 };
 
 function buildWeatherRequest(b, j) {
+    if (b.length == 0) {
+        alert('That is not a valid location')
+        return
+    }
+    saveSearches(j);
+    buildRecents();
     console.log(b[0].lat, b[0].lon);
     let requestWeather = `${WeatherApi + b[0].lat}&lon=${b[0].lon}&appid=${apiKey}&units=imperial`;
     console.log(requestWeather);
@@ -51,6 +55,7 @@ function getGeoCode(request, i) {
             return response.json();
         })
         .then(function(data) {
+            console.log(data)
             buildWeatherRequest(data, i);
             });
 };
