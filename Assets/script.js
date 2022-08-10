@@ -132,6 +132,7 @@ function buildRecents() {
         myBtn.setAttribute('data-request', recentSearchArr[i].weatherReq)
         myBtn.setAttribute('data-city', recentSearchArr[i].city)
         myBtn.textContent = recentSearchArr[i].city;
+        myBtn.addEventListener('click', recentSearchHandler)
         recentSearchDiv.appendChild(myBtn);
     }
 }
@@ -147,10 +148,6 @@ function recentSearchHandler(f) {
 
 searchBtn.addEventListener('click', searchButtonHandler)
 
-let recentSearchBtn = document.querySelectorAll('.myBtn');
-for (let i = 0; i < recentSearchBtn.length; i++) {
-    recentSearchBtn[i].addEventListener('click', recentSearchHandler)
-}
 
 
 
