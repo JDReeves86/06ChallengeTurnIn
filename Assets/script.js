@@ -17,8 +17,12 @@ let recentSearchArr = [];
 init();
 
 function searchButtonHandler() {
-    buildGeoRequest(cityName.value);
-    saveSearches();
+    let cityStr = trimInput(cityName.value)
+    if (cityStr.length == 0) {
+        alert('Please input a valid city')
+    }
+    buildGeoRequest(cityStr);
+    saveSearches(cityStr);
     buildRecents();
 };
 
@@ -30,23 +34,23 @@ function buildGeoRequest(g) {
     convertCity(g);
     console.log(newCity);
     let requestGeoCode = `${GeoCodeApi + newCity},${stateName.value},${countryCode.value}&appid=${apiKey}`;
-    getGeoCode(requestGeoCode);
+    getGeoCode(requestGeoCode, g);
 };
 
-function buildWeatherRequest(b) {
+function buildWeatherRequest(b, j) {
     console.log(b[0].lat, b[0].lon);
     let requestWeather = `${WeatherApi + b[0].lat}&lon=${b[0].lon}&appid=${apiKey}&units=imperial`;
     console.log(requestWeather);
-    getWeather(requestWeather, cityName.value);
+    getWeather(requestWeather, j);
 };
 
-function getGeoCode(request) {
+function getGeoCode(request, i) {
     fetch(request)
         .then(function(response) {
             return response.json();
         })
         .then(function(data) {
-            buildWeatherRequest(data);
+            buildWeatherRequest(data, i);
             });
 };
 
@@ -61,12 +65,13 @@ function getWeather(request, g) {
         });
 };
 
-function capitalizeFirstLetter(e) {
-    return e.charAt(0).toUpperCase() + e.slice(1);
-};
+function trimInput (str) {
+    let newStr = str.trim()
+    return newStr.charAt(0).toUpperCase() + newStr.slice(1)
+}
 
 function buildResults(c, d) {
-    let cityDisplay = capitalizeFirstLetter(d)
+    let cityDisplay = d
     cityName.value = "";
     stateName.value = "";
     let cityCard = document.getElementById('cityCard');
@@ -108,8 +113,8 @@ function buildResults(c, d) {
 
 };
 
-function saveSearches() {
-    recentSearchArr.push(cityName.value);
+function saveSearches(k) {
+    recentSearchArr.push(k);
     while (recentSearchArr.length > 5) {
         recentSearchArr.shift()
     }
@@ -130,7 +135,7 @@ function buildRecents() {
         let myBtn = document.createElement('button');
         myBtn.setAttribute('class', 'myBtn');
         myBtn.setAttribute('data-city', recentSearchArr[i])
-        myBtn.textContent = capitalizeFirstLetter(recentSearchArr[i]);
+        myBtn.textContent = recentSearchArr[i];
         myBtn.addEventListener('click', recentSearchHandler)
         recentSearchDiv.appendChild(myBtn);
     }
@@ -138,7 +143,7 @@ function buildRecents() {
 
 function recentSearchHandler(f) {
     let clicked = f.target;
-    let priorCity = clicked.getAttribute('data-city');
+    let priorCity = trimInput(clicked.getAttribute('data-city'));
     forecast.innerHTML = "";
     buildGeoRequest(priorCity);
 
