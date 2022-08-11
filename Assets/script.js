@@ -6,6 +6,8 @@ const searchBtn = document.getElementById('searchBtn');
 const recentSearchDiv = document.getElementById('recentSearches');
 let forecast = document.getElementById('forecast-cont');
 
+
+
 let WeatherApi = 'https://api.openweathermap.org/data/2.5/onecall?lat='
 //{lat}&lon={lon}&exclude={part}&appid={API key}
 let GeoCodeApi = 'http://api.openweathermap.org/geo/1.0/direct?q='
@@ -80,6 +82,7 @@ function buildResults(c, d) {
     cityName.value = "";
     stateName.value = "";
     let cityCard = document.getElementById('cityCard');
+    let date = document.getElementById('date');
     let weather = document.getElementById('weather');
     let temp = document.getElementById('temp');
     let wind = document.getElementById('wind');
@@ -88,6 +91,7 @@ function buildResults(c, d) {
     let icon = document.getElementById('icon');
 
     cityCard.textContent = `${d}`
+    date.textContent = `${moment().format('MMM Do YYYY')}`
     icon.setAttribute('src', `http://openweathermap.org/img/wn/${c.current.weather[0].icon}.png`)
     weather.textContent = `${c.current.weather[0].description}`
     temp.textContent = `Temp: ${c.current.temp}°F`
@@ -106,6 +110,7 @@ function buildResults(c, d) {
                 <img src="http://openweathermap.org/img/wn/${c.daily[i].weather[0].icon}.png"id="icon">
             </div>
             <div class="col-md">
+                <h4>${moment().add((i+1), 'days').format('MMM Do YYYY')}</h4>
                 <p>${c.daily[i].weather[0].description}</p>
                 <p>Temp: ${c.daily[i].temp.day}°F</p>
                 <p>Windspeed: ${c.daily[i].wind_gust}mph</p>

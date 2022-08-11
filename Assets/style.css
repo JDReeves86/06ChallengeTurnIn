@@ -70,7 +70,8 @@ body {
     margin: 1rem;
 }
 
-#cityCard {
+#cityCard,
+#date {
     text-align: center;
 }
 
