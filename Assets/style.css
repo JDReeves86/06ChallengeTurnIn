@@ -26,6 +26,12 @@ font-family: 'Rubik', sans-serif; */
     font-family: 'Rubik', sans-serif;
     background-color: var(--gray);
     border-bottom: solid black 1px;
+    background-image: linear-gradient(to right, var(--stormy), var(--gray), var(--stormy))
+}
+
+#searchBtn {
+    background-color: var(--night);
+    color: white
 }
 
 body {
