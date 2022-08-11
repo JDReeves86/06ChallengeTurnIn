@@ -1,7 +1,6 @@
 const weatherContainer = document.getElementById('container')
 const cityName = document.getElementById('city');
 const stateName = document.getElementById('state');
-const countryCode = document.getElementById('country');
 const searchBtn = document.getElementById('searchBtn');
 const recentSearchDiv = document.getElementById('recentSearches');
 let forecast = document.getElementById('forecast-cont');
@@ -34,7 +33,7 @@ function convertCity(a) {
 function buildGeoRequest(g) {
     convertCity(g);
     console.log(newCity);
-    let requestGeoCode = `${GeoCodeApi + newCity},${stateName.value},${countryCode.value}&appid=${apiKey}`;
+    let requestGeoCode = `${GeoCodeApi + newCity},${stateName.value},&appid=${apiKey}`;
     getGeoCode(requestGeoCode, g);
 };
 
