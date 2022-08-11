@@ -92,8 +92,10 @@ function getWeather(request, g) {
         });
 };
 
-
-function buildResults(c, d) {
+// Takes data returned by getWeather() and builds the weather displays on screen.
+// Utilizes variable g to display the requested city name. 
+// Iterates over the future weather report 5 times to generate 5 day forecast. 
+function buildResults(c, g) {
     cityName.value = "";
     stateName.value = "";
     let cityCard = document.getElementById('cityCard');
@@ -105,7 +107,7 @@ function buildResults(c, d) {
     let humid = document.getElementById('humid');
     let icon = document.getElementById('icon');
 
-    cityCard.textContent = `${d}`
+    cityCard.textContent = `${g}`
     date.textContent = `${moment().format('MMM Do YYYY')}`
     icon.setAttribute('src', `http://openweathermap.org/img/wn/${c.current.weather[0].icon}.png`)
     weather.textContent = `${c.current.weather[0].description}`
@@ -142,26 +144,22 @@ function buildResults(c, d) {
 
 };
 
+// Uses switch statement to compare received UV index value and element to apply CSS format changes.
 function setUVColors(target, l) {
     switch (true) {
         case (l < 3):
-            console.log('UVI low');
             target.setAttribute('style', 'background-color: var(--UVlo); color: white')
             break;
         case (l >= 3 && l < 6):
-            console.log('UVI mod');
             target.setAttribute('style', 'background-color: var(--UVmod)')
             break;
         case (l >= 6 && l < 8):
-            console.log('UVI hi');
             target.setAttribute('style', 'background-color: var(--UVhi)')
             break;
         case (l >= 8 && l <= 11):
-            console.log('UVI way hi');
             target.setAttribute('style', 'background-color: var(--UVwayhi); color: white')
             break;
         case (l > 11):
-            console.log('UVI hi AF');
             target.setAttribute('style', 'background-color: var(--UVhiAF); color: white')
             break;
         default:
@@ -170,6 +168,10 @@ function setUVColors(target, l) {
 
 }
 
+// Checks recentSearchArr for the presence of the value it is given. If present in current array, function returns.
+// If it passes the first check, then it proceeds to push the value gien into the array.
+// Includes while loop to ensure array des not grow past a length of 5.
+// Sets local stroage.
 function saveSearches(k) {
     if (recentSearchArr.includes(k)) {
         return
@@ -181,17 +183,21 @@ function saveSearches(k) {
     localStorage.setItem('searches', JSON.stringify(recentSearchArr));
 };
 
+// Sets recentSearchArr with local storage values if present.
+// Calls buildRecents() to generate recent search buttons.
 function init() {
     let storedSearches = JSON.parse(localStorage.getItem('searches'));
     if (storedSearches !== null) {
         recentSearchArr = storedSearches
     }
-    buildRecents()
+    buildRecents();
 }
 
+// Iterates over recentSearchArr and for each value in the array, a button is generated and event listener appended.
+// Sets a data value to be called upon when clicked.
 function buildRecents() {
     recentSearchDiv.innerHTML = ""
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < recentSearchArr.length; i++) {
         let myBtn = document.createElement('button');
         myBtn.setAttribute('class', 'myBtn');
         myBtn.setAttribute('data-city', recentSearchArr[i])
@@ -201,6 +207,7 @@ function buildRecents() {
     }
 }
 
+// Starts process same as the search button. Uses the data value of the button to pass into the buildGeoRequest() function.
 function recentSearchHandler(f) {
     let clicked = f.target;
     let priorCity = trimInput(clicked.getAttribute('data-city'));
