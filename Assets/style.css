@@ -16,7 +16,7 @@ font-family: 'Rubik', sans-serif; */
 }
 
 
-*{
+* {
     font-family: 'Nunito', sans-serif;
     margin: 0;
     padding: 0;
@@ -42,6 +42,7 @@ body {
     margin: 0rem
 }
 
+/* Recent searches header */
 .container h5 {
     text-align: center;
     margin-top: -2rem;
@@ -51,10 +52,12 @@ body {
     font-weight: bold;
 }
 
+/* recent searches row where buttons will be added */
 #recentSearches {
     justify-content: center;
 }
 
+/* buttons for recent searches */
 .myBtn {
     padding: 0.5rem 1rem;
     margin: 1rem 2rem;
@@ -63,6 +66,7 @@ body {
     background-color: var(--gray);
 }
 
+/* forecast header */
 .banner {
     font-size: xx-large;
     background-color: var(--gray);
@@ -76,44 +80,24 @@ body {
     margin: 1rem;
 }
 
+/* headers within the weather cards. */
 #cityCard,
 #date {
     text-align: center;
 }
 
+/* weather cards */
 .mycard {
     border:solid black 1px;
     border-radius: 5px;
     margin: 1rem;
 }
 
-.day-title {
-    background-color: var(--gray);
-    border-top: solid black 1px;
-    text-align: center;
-}
-
+/* centers daily weather */
 .day-container{
     justify-content: center;
 }
 
 .day {
     background-color: var(--day);
-}
-
-.night {
-    background-color: var(--night);
-    color: white;
-}
-
-#icon {
-    font-size: 4rem;
-}
-
-.sun {
-    color: var(--sun);
-}
-
-.moon {
-    color: var(--moon)
 }
