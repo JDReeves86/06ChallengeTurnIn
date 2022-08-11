@@ -71,7 +71,7 @@
 
 <br>
 
-![myscreenshot](./Assets/Screenshot1.png)
+![myscreenshot](./Assets/Screenshots/Screenshot1.png)
 
 <br>
 
@@ -83,7 +83,7 @@ Initial state.
 
 <br>
 
-![myscreenshot](./Assets/Screenshot2.png)
+![myscreenshot](./Assets/Screenshots/Screenshot2.png)
 
 <br>
 
@@ -95,7 +95,7 @@ Showing search results.
 
 <br>
 
-![myscreenshot](./Assets/Screenshot3.png)
+![myscreenshot](./Assets/Screenshots/Screenshot3.png)
 
 <br>
 
