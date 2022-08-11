@@ -7,7 +7,7 @@ let forecast = document.getElementById('forecast-cont');
 
 let WeatherApi = 'https://api.openweathermap.org/data/2.5/onecall?lat='
 
-let GeoCodeApi = 'http://api.openweathermap.org/geo/1.0/direct?q='
+let GeoCodeApi = 'https://api.openweathermap.org/geo/1.0/direct?q='
 
 const apiKey = 'f077831005b0a99879525b916f58d7b5'
 
