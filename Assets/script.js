@@ -59,7 +59,6 @@ function getGeoCode(request, g) {
             if (response.ok) {
                 return response.json()
                     .then(function(data) {
-                    console.log(data)
                     buildWeatherRequest(data, g);
                     });
             }
@@ -97,7 +96,6 @@ function getWeather(request, g) {
             if(response.ok) {
                 return response.json()
                     .then(function(data) {
-                    console.log(data)
                     buildResults(data, g)
                     });
             }
