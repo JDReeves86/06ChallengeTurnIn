@@ -5,18 +5,21 @@ const searchBtn = document.getElementById('searchBtn');
 const recentSearchDiv = document.getElementById('recentSearches');
 let forecast = document.getElementById('forecast-cont');
 
-
-
 let WeatherApi = 'https://api.openweathermap.org/data/2.5/onecall?lat='
-//{lat}&lon={lon}&exclude={part}&appid={API key}
+
 let GeoCodeApi = 'http://api.openweathermap.org/geo/1.0/direct?q='
-//{city name},{state code},{country code}&limit={limit}&appid={API key}
+
 const apiKey = 'f077831005b0a99879525b916f58d7b5'
 
+// Array to be used for local storage
 let recentSearchArr = [];
 
+//calls init() function
 init();
 
+// Called when search button is clicked. Trims input in the event white space is inadvertantly added.
+// If string is trimmed to a length of 0 an alert is called to prompt the user to input a valid city.
+// Calls the buildGeoRequest function to start the process.
 function searchButtonHandler() {
     let cityStr = trimInput(cityName.value)
     if (cityStr.length == 0) {
@@ -26,41 +29,58 @@ function searchButtonHandler() {
     buildGeoRequest(cityStr);
 };
 
-function convertCity(a) {
-    return newCity = a.replace(/ /gi, "+");
-};
+// Trims input and capitalizes the first letter of the city input.
+function trimInput (str) {
+    let newStr = str.trim()
+    return newStr.charAt(0).toUpperCase() + newStr.slice(1)
+}
 
+// Takes the string passed into it and passes it into the convertCity() function to then build an API URL.
+// Passes the built URL into the getGeoCode function. 
+// Variable g is the city string and is handed down through into getGeoCode() fucntion for later use.
 function buildGeoRequest(g) {
     convertCity(g);
-    console.log(newCity);
     let requestGeoCode = `${GeoCodeApi + newCity},${stateName.value},&appid=${apiKey}`;
     getGeoCode(requestGeoCode, g);
 };
 
-function buildWeatherRequest(b, j) {
-    if (b.length == 0) {
-        alert('That is not a valid location')
-        return
-    }
-    saveSearches(j);
-    buildRecents();
-    console.log(b[0].lat, b[0].lon);
-    let requestWeather = `${WeatherApi + b[0].lat}&lon=${b[0].lon}&appid=${apiKey}&units=imperial`;
-    console.log(requestWeather);
-    getWeather(requestWeather, j);
+// Converts the city string to remove spaces and replace them with '+' to ensure API request delivers an appropriate URL.
+function convertCity(a) {
+    return newCity = a.replace(/ /gi, "+");
 };
 
-function getGeoCode(request, i) {
+// Receives the built API URL and requests the Geocoding data so that weather data may be requested.
+// Variable g continues to be handed down through function calls.
+function getGeoCode(request, g) {
     fetch(request)
         .then(function(response) {
             return response.json();
         })
         .then(function(data) {
             console.log(data)
-            buildWeatherRequest(data, i);
+            buildWeatherRequest(data, g);
             });
 };
 
+// Builds the weather request by pulling the latitude and longitude data from the returned data in the getGeoCode() function.
+// If the returned array from getGeoCode has a length of 0, this means an invalid location was entered and an alert is called to prompt the user.
+// If not, the function will continue. At this point the variable that has been handed down through the other functions is used.
+// Calls buildRecents() to update the buttons with the newly searched location.
+// Once these actions are completed, the getWeather() function is called to fetch the weather data.
+function buildWeatherRequest(b, g) {
+    if (b.length == 0) {
+        alert('That is not a valid location')
+        return
+    }
+    saveSearches(g);
+    buildRecents();
+    let requestWeather = `${WeatherApi + b[0].lat}&lon=${b[0].lon}&appid=${apiKey}&units=imperial`;
+    console.log(requestWeather);
+    getWeather(requestWeather, g);
+};
+
+
+// Requests weather data fromt he API. Receives variable g and passes into buildResults() to be used.
 function getWeather(request, g) {
     fetch(request)
         .then(function(response) {
@@ -72,10 +92,6 @@ function getWeather(request, g) {
         });
 };
 
-function trimInput (str) {
-    let newStr = str.trim()
-    return newStr.charAt(0).toUpperCase() + newStr.slice(1)
-}
 
 function buildResults(c, d) {
     cityName.value = "";
