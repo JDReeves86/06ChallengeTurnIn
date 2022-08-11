@@ -41,7 +41,9 @@ function trimInput (str) {
 function buildGeoRequest(g) {
     convertCity(g);
     let requestGeoCode = `${GeoCodeApi + newCity},${stateName.value},&appid=${apiKey}`;
+    // let requestBrokenCode = `${GeoCodeApi + newCity},${stateName.value},&appdi=${apiKey}`;
     getGeoCode(requestGeoCode, g);
+    // getGeoCode(requestBrokenCode, g);
 };
 
 // Converts the city string to remove spaces and replace them with '+' to ensure API request delivers an appropriate URL.
@@ -54,12 +56,20 @@ function convertCity(a) {
 function getGeoCode(request, g) {
     fetch(request)
         .then(function(response) {
-            return response.json();
+            if (response.ok) {
+                return response.json()
+                    .then(function(data) {
+                    console.log(data)
+                    buildWeatherRequest(data, g);
+                    });
+            }
+            else {
+                alert(`Error: ${response.statusText}`)
+            }
         })
-        .then(function(data) {
-            console.log(data)
-            buildWeatherRequest(data, g);
-            });
+        .catch(function(error) {
+            alert('Unable to retrieve requested data.')
+        }); 
 };
 
 // Builds the weather request by pulling the latitude and longitude data from the returned data in the getGeoCode() function.
@@ -75,20 +85,28 @@ function buildWeatherRequest(b, g) {
     saveSearches(g);
     buildRecents();
     let requestWeather = `${WeatherApi + b[0].lat}&lon=${b[0].lon}&appid=${apiKey}&units=imperial`;
-    console.log(requestWeather);
+    // let requestBADWeather = `${WeatherApi + b[0].lat}&lon=${b[0].lon}&appdi=${apiKey}&units=imperial`;
     getWeather(requestWeather, g);
+    // getWeather(requestBADWeather, g);
 };
-
 
 // Requests weather data fromt he API. Receives variable g and passes into buildResults() to be used.
 function getWeather(request, g) {
     fetch(request)
         .then(function(response) {
-            return response.json()
+            if(response.ok) {
+                return response.json()
+                    .then(function(data) {
+                    console.log(data)
+                    buildResults(data, g)
+                    });
+            }
+            else {
+                alert(`Error: ${response.statusText}`)
+            }
         })
-        .then(function(data) {
-            console.log(data)
-            buildResults(data, g)
+        .catch(function(error) {
+            alert('Unable to retrieve requested data.')
         });
 };
 
