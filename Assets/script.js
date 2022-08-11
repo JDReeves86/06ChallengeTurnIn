@@ -127,7 +127,7 @@ function buildResults(c, g) {
 
     cityCard.textContent = `${g}`
     date.textContent = `${moment().format('MMM Do YYYY')}`
-    icon.setAttribute('src', `http://openweathermap.org/img/wn/${c.current.weather[0].icon}.png`)
+    icon.setAttribute('src', `https://openweathermap.org/img/wn/${c.current.weather[0].icon}.png`)
     weather.textContent = `${c.current.weather[0].description}`
     temp.textContent = `Temp: ${c.current.temp}°F`
     wind.textContent = `Windspeed: ${c.current.wind_speed}mph`
@@ -142,7 +142,7 @@ function buildResults(c, g) {
         node.setAttribute('class', 'col-2 mycard day')
         node.innerHTML = `
             <div class="p-3">
-                <img src="http://openweathermap.org/img/wn/${c.daily[i].weather[0].icon}.png"id="icon">
+                <img src="https://openweathermap.org/img/wn/${c.daily[i].weather[0].icon}.png"id="icon">
             </div>
             <div class="col-md">
                 <h4>${moment().add((i+1), 'days').format('MMM Do YYYY')}</h4>
